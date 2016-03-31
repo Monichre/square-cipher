@@ -2,7 +2,9 @@ body {
   text-align: center;
 }
 td {
-  outline: 1px solid black;
+  outline: 2px solid black;
+  height: 20px;
+  width: 20px;
 }
 table {
   margin: auto;
