@@ -2,18 +2,55 @@ $(function() {
   $("#romans").click(function(){
   console.log(romans(parseInt(prompt("type a number"))));
   });
-  $("#crypt").click(function(){
-    console.log(crypt(prompt("type a sentance")));
-  });
 
 
+  $("#in").keydown(function() {
+   setTimeout(function() {
+      results = crypt($("#in").val());
+      console.log(results[0]);
+      $("p#output").text(results[0]);
+      grid = results[1];
+     //display grid in html
+     $("table").empty();
+     for (var r = 0; r < grid.length; r++){
+       $("table").append("<tr></tr>");
+       for (var c = 0; c < grid[r].length; c++){
+         if (grid[r][c]) {
+         $("table tr:nth-child(" + (r + 1)  + ")").append("<td>" + grid[r][c] + "</td>");
+         } else {
+         $("table tr:nth-child(" + (r + 1)  + ")").append("<td> </td>");
+         }
+       }
+     }
+   }, 100);
+ });
 
+
+  // $("#crypt").click(function(){
+  //    results = crypt(prompt("type a sentence"));
+  //    console.log(results[0]);
+  //    $("p#output").text(results[0]);
+  //    grid = results[1];
+  //   //display grid in html
+  //   for (var r = 0; r < grid.length; r++){
+  //     $("table").append("<tr></tr>");
+  //     for (var c = 0; c < grid[r].length; c++){
+  //       if (grid[r][c]) {
+  //       $("table tr:nth-child(" + (r + 1)  + ")").append("<td>" + grid[r][c] + "</td>");
+  //       } else {
+  //       $("table tr:nth-child(" + (r + 1)  + ")").append("<td> </td>");
+  //       }
+  //     }
+  //   }
+  // });
+
+
+  $("table").append("<tr></tr>");
   //CRYPT BIZ
   function crypt(str) {
     var str = str.toLowerCase().replace(/\W/g, "").split("");
     var rows = Math.ceil(Math.sqrt(str.length));
     var columns = Math.ceil(str.length/rows);
-    console.log("columns " + columns);
     var results = [];
     var encrypted = [];
     var i = 0;
@@ -26,20 +63,20 @@ $(function() {
           i++;
         }
       }
-      for (var a = 0; a < rows; a++){
+
+      for (var a = 0; a < columns; a++){
         encrypted.push(" ");
-        for (var b = 0; b < columns; b++){
+        for (var b = 0; b < rows; b++){
           encrypted.push(results[b][a]);
         }
       }
+
       // var col = i % columns;
       // var row = Math.floor(i / columns);
       // results[row][col] = str[i];
     //}
 
-    console.log(results);
-
-    return encrypted.join("");
+    return [encrypted.join(""), results]
   }
 
   //ROMAN BIZ
